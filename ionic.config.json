@@ -1,0 +1,7 @@
+{
+  "name": "ejemplo-firestone",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
