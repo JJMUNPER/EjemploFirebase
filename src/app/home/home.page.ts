@@ -13,10 +13,18 @@ export class HomePage {
 
   constructor(private firestoreService: FirestoreService) {
     //Crea una tarea vacia al empezar
+    this.tareaEditando= {} as Tarea;
   }
 
   clicBotonInsertar(){
-
+    this.firestoreService.insertar("tareas",this.tareaEditando)
+    .then(() => {
+      console.log("Tarea creada correctamente");
+      //Limpiar el contenido de la tarea que se estaba editando
+      this.tareaEditando = {} as Tarea;
+    }, (error)=>{
+      console.error(error);
+    });
   }
 
 }
