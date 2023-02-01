@@ -10,10 +10,16 @@ import { Tarea } from '../tarea';
 export class HomePage {
 
   tareaEditando: Tarea;
+  arrayColeccionTareas: any = [{
+    id:"",
+    data: {} as Tarea
+  }];
 
   constructor(private firestoreService: FirestoreService) {
     //Crea una tarea vacia al empezar
     this.tareaEditando= {} as Tarea;
+
+    this.obtenerListaTareas();
   }
 
   clicBotonInsertar(){
@@ -25,6 +31,18 @@ export class HomePage {
     }, (error)=>{
       console.error(error);
     });
+  }
+  
+  obtenerListaTareas(){
+    this.firestoreService.consultar("tareas").subscribe((resultadoConsultaTareas) =>{
+      this.arrayColeccionTareas = [];
+      resultadoConsultaTareas.forEach((datosTarea: any) =>{
+        this.arrayColeccionTareas.push({
+          id: datosTarea.payload.doc.id,
+          data: datosTarea.payload.doc.data()
+        })
+      })
+    })
   }
 
 }
